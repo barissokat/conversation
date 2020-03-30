@@ -4,7 +4,7 @@
 
 @foreach ($conversation->replies as $reply)
 @if ($reply->isBest())
-<div class="card mb-2 border-success">
+<div class="card mb-2">
    <div class="card-header d-flex justify-content-between bg-success text-white">
       <h2 class="mb-0">{{ $reply->user->name }} said...</h2>
       
