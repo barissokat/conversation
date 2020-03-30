@@ -13,14 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+
+Route::get('/conversations', ['as' => 'conversations', 'uses' => 'ConversationController@index']);
+Route::get('/conversations/{conversation}', ['as' => 'conversations.show', 'uses' => 'ConversationController@show']);
+
+Route::post('/best-replies/{reply}', ['as' => 'best-replies.store', 'uses' => 'ConversationBestReplyController@store']);
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
