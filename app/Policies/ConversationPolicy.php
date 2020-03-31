@@ -11,6 +11,18 @@ class ConversationPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view the conversation.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Conversation  $conversation
+     * @return mixed
+     */
+    public function view(User $user, Conversation $conversation)
+    {
+        return $conversation->user->is($user);
+    }
+
+    /**
      * Determine whether the user can update the conversation.
      *
      * @param  \App\User  $user

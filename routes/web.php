@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 
 Route::get('/conversations', ['as' => 'conversations', 'uses' => 'ConversationController@index']);
-Route::get('/conversations/{conversation}', ['as' => 'conversations.show', 'uses' => 'ConversationController@show']);
+Route::get('/conversations/{conversation}', ['as' => 'conversations.show', 'uses' => 'ConversationController@show'])->middleware('can:view,conversation');
 
 Route::post('/best-replies/{reply}', ['as' => 'best-replies.store', 'uses' => 'ConversationBestReplyController@store']);
 
