@@ -19,7 +19,9 @@ class ConversationPolicy
      */
     public function view(User $user, Conversation $conversation)
     {
-        return $conversation->user->is($user);
+        if ($user->abilities()->contains('view_forum') || $conversation->user->is($user)) {
+            return true;
+        }
     }
 
     /**
@@ -31,6 +33,8 @@ class ConversationPolicy
      */
     public function update(User $user, Conversation $conversation)
     {
-        return $conversation->user->is($user);
+        if ($user->abilities()->contains('edit_forum') || $conversation->user->is($user)) {
+            return true;
+        }
     }
 }

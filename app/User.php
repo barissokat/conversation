@@ -37,13 +37,32 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
     public function conversations()
     {
         return $this->hasMany(Conversation::class);
     }
 
+    public function abilities()
+    {
+        return $this->roles->map->abilities->flatten()->pluck('name')->unique();
+    }
+
+    public function assignRole($role)
+    {
+        if (is_string($role)) {
+            $role = Role::whereName($role)->firstOrFail();
+        }
+
+        $this->roles()->syncWithoutDetaching($role);
+    }
+
     public function isAdmin()
     {
-        return $this->is_admin == true;
+        return $this->roles->flatten()->pluck('name')->unique()->contains('admin');
     }
 }

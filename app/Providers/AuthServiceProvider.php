@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Conversation' => 'App\Policies\ConversationPolicy',
     ];
 
     /**
@@ -26,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function (User $user) {
-            if ($user->isAdmin()) {
+        Gate::before(function ($user, $ability) {
+            if ($user->abilities()->contains($ability)) {
                 return true;
             }
         });
